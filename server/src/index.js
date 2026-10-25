@@ -7,6 +7,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { z } from 'zod';
 import { pool } from './db.js';
+import { initializeDatabase } from './init-db.js';
 import { requireAuth } from './auth.js';
 import { solveProblem } from './ai.js';
 
@@ -156,4 +157,10 @@ app.use((err, _req, res, _next) => {
 });
 
 const port = Number(process.env.PORT || 3001);
-app.listen(port, () => console.log(`Resolve Tudo API rodando na porta ${port}`));
+try {
+  await initializeDatabase();
+  app.listen(port, () => console.log(`Resolve Tudo API rodando na porta ${port}`));
+} catch (err) {
+  console.error('Falha ao inicializar o banco de dados:', err);
+  process.exit(1);
+}
