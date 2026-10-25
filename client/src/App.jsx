@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ArrowRight, BadgeCheck, Bell, BookOpen, Check, ChevronLeft, CircleHelp, ClipboardList, Clock3, FileText, Home, LogIn, LogOut, Menu, Plus, ShieldCheck, Sparkles, UserRound, X } from 'lucide-react';
 
 const API = (import.meta.env.VITE_API_URL || 'http://localhost:3001').replace(/\/$/, '');
