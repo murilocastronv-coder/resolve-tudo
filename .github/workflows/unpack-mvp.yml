@@ -1,0 +1,38 @@
+name: Expand Resolve Tudo MVP archive
+
+on:
+  push:
+    paths:
+      - ".github/workflows/unpack-mvp.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  expand:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Rebuild and extract MVP archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat bootstrap/part-01.txt > /tmp/resolve-tudo.zip.b64
+          tail -c +2001 bootstrap/part-03.txt >> /tmp/resolve-tudo.zip.b64
+          cat bootstrap/part-04.txt bootstrap/part-05.txt bootstrap/part-06.txt bootstrap/part-07.txt >> /tmp/resolve-tudo.zip.b64
+          base64 --decode /tmp/resolve-tudo.zip.b64 > /tmp/resolve-tudo.zip
+          unzip -t /tmp/resolve-tudo.zip
+          unzip -o /tmp/resolve-tudo.zip -d .
+          rm -rf bootstrap
+
+      - name: Commit source files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "Add Resolve Tudo MVP source"
+            git push
+          fi
