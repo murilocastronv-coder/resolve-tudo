@@ -1,0 +1,11 @@
+{
+  "name": "Resolve Tudo",
+  "short_name": "Resolve Tudo",
+  "description": "Organize problemas do dia a dia e descubra os próximos passos.",
+  "lang": "pt-BR",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7f7fc",
+  "theme_color": "#5b4bdb",
+  "icons": []
+}
